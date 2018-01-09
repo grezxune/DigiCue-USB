@@ -13,7 +13,7 @@ else:
     from tkinter import ttk
 
 
-class Resizable():
+class Resizable(object):
     def __init__(self, canvas):
         self.canvas = canvas
         self.canvas_width_orig = canvas.width
@@ -110,7 +110,7 @@ class ResizableCanvas(Tk.Canvas):
         self.scale("all", 0, 0, wscale, hscale)
 
 
-class ScoreBar:
+class ScoreBar(object):
     def __init__(self, canvas, left, top, right, bottom, scale):
         self.canvas = canvas
         self.left = left
@@ -180,7 +180,6 @@ class ScoreBar:
 
 
 class Plot:
-
     def __init__(self, canvas, left, top, size):
         self.canvas = canvas
         self.canvas_width_orig = canvas.width
@@ -256,7 +255,6 @@ class Plot:
 
 
 class ScoreBars:
-
     def __init__(self, frame, dcb):
 
         self.dcb = dcb
@@ -387,7 +385,6 @@ class ScoreBars:
 
 
 class OptionList_Command_MacAddr:
-
     def __init__(self, parent):
         self.parent = parent
 
@@ -399,9 +396,7 @@ class OptionList_Command_MacAddr:
 
 
 class GUI:
-
     def __init__(self, master, dcb):
-
         # All variables from DigiCue Blue are exposed through class variables
         # in dcb
 

@@ -41,10 +41,7 @@ class SerialPortSelect:
         self.label.pack()
         self.portref = []
         self.ports = None
-        print [[item for item in comport] for comport in serialport.list_ports.comports()]
         self.ports = list(serialport.list_ports.comports())
-        print serialport.list_ports.comports()
-        print self.ports
 
         master.title("Select serial port")
         self.listbox = Tk.Listbox(master, width=100)
