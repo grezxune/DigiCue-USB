@@ -51,40 +51,10 @@ class Bluegiga():
         self.uuid_service = [0x28, 0x00]  # 0x2800
         self.uuid_client_characteristic_configuration = [0x29, 0x02]  # 0x2902
 
-        self.uuid_crp_service = [
-            0x0b,
-            0xd5,
-            0x16,
-            0x66,
-            0xe7,
-            0xcb,
-            0x46,
-            0x9b,
-            0x8e,
-            0x4d,
-            0x27,
-            0x42,
-            0xf1,
-            0xba,
-            0x77,
-            0xcc]
-        self.uuid_crp_characteristic = [
-            0xe7,
-            0xad,
-            0xd7,
-            0x80,
-            0xb0,
-            0x42,
-            0x48,
-            0x76,
-            0xaa,
-            0xe1,
-            0x11,
-            0x28,
-            0x55,
-            0x35,
-            0x3c,
-            0xc1]
+        self.uuid_crp_service = [0x0b, 0xd5, 0x16, 0x66, 0xe7, 0xcb, 0x46, 0x9b,
+                                 0x8e, 0x4d, 0x27, 0x42, 0xf1, 0xba, 0x77, 0xcc]
+        self.uuid_crp_characteristic = [0xe7, 0xad, 0xd7, 0x80, 0xb0, 0x42, 0x48, 0x76,
+                                        0xaa, 0xe1, 0x11, 0x28, 0x55, 0x35, 0x3c, 0xc1]
 
         self.STATE_STANDBY = 0
         self.STATE_CONNECTING = 1
@@ -103,8 +73,7 @@ class Bluegiga():
         # wouldn't work at this point if it's already timed out:
         #ble.send_command(ser, self.ble.ble_cmd_system_reset(0))
         #ble.check_activity(ser, 1)
-        self.dprint(
-            "BGAPI parser timed out. Make sure the BLE device is in a known/idle state.")
+        self.dprint("BGAPI parser timed out. Make sure the BLE device is in a known/idle state.")
 
     # gap_scan_response handler
     def my_ble_evt_gap_scan_response(self, sender, args):

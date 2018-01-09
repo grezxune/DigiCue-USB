@@ -36,22 +36,33 @@ class App(threading.Thread):  # thread GUI to that BGAPI can run in background
         self.root.mainloop()
 
 
-def main():
-    try:
-        f = open("comport.cfg", "r")
+def read_comport():
+    comport = None
+
+    if os.path.isfile('comport.cfg'):
+        f = open('comport.cfg', 'r')
         comport = f.readline().strip(' ')
         f.close()
-    except BaseException:
-        # open comport selection gui
-        serialport.launch_selection()
-        return
 
+    return comport
+
+
+def select_comport():
+    serialport.launch_selection(start_main_gui)
+
+
+def start_main_gui(comport):
     try:
-        # open serial port and launch application
         print "Opening %s" % comport
+
+        # Open serial port
         ser = serial.Serial(comport, 115200, timeout=1, writeTimeout=1)
+
         dcb = DigicueBlue(filename="data.csv", debugprint=False)
+
+        # Launch main gui
         app = App(dcb)
+
         bg = Bluegiga(dcb, ser, debugprint=True)
     except BaseException:
         print traceback.format_exc()
@@ -60,15 +71,22 @@ def main():
         except BaseException:
             print 'Unable to open %s' % comport
         finally:
+            text = "Please make sure the BLED112 dongle is plugged into the COM port "
+            text += "specified in comport.cfg, and that no other programs are using the port. "
+            text += "Use the serialport GUI to help select the correct port."
+
+            print text
             # Exits all threads of the application
             os._exit(1)
-        text = """Please make sure the BLED112 dongle is plugged into the COM port
-                specified in comport.cfg, and that no other programs are using the port.
-                Use the serialport GUI to help select the correct port."""
-        text = text.replace('\n', ' ')
-        text = text.replace('\t', '')
-        print text
-        serialport.launch_selection()
+
+
+def main():
+    comport = read_comport()
+
+    if comport is None:
+        select_comport()
+    else:
+        start_main_gui(comport)
 
 
 if __name__ == '__main__':

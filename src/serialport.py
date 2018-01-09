@@ -29,9 +29,9 @@ def _test():
         print "Success"
 
 
-class SerialPortSelect:
-
-    def __init__(self, master):
+class SerialPortSelect(object):
+    def __init__(self, master, callback):
+        self.callback = callback
         self.master = master
         master.resizable(0, 0)
 
@@ -58,7 +58,6 @@ class SerialPortSelect:
             for subitem in item:
                 if len(text) > 0:
                     text = "%s - %s" % (text, subitem)
-                    print text
                 else:
                     text = subitem
                     self.portref.append(subitem)
@@ -73,20 +72,21 @@ class SerialPortSelect:
             return
 
         try:
+            comport_selected = self.portref[index]
             f = open("comport.cfg", "w")
-            f.write(self.portref[index])
+            f.write(comport_selected)
             f.close()
-            self.label_text.set(
-                "Success. %s saved as BLED112 comport." %
-                self.portref[index])
+            self.label_text.set("Success. %s saved as BLED112 comport." % comport_selected)
+
+            if self.callback is not None:
+                self.callback(comport_selected)
         except BaseException:
-            self.label_text.set(
-                "Error writing file comport.cfg. Check permissions.")
+            self.label_text.set("Error writing file comport.cfg. Check permissions.")
 
 
-def launch_selection():
+def launch_selection(callback=None):
     root = Tk.Tk()
-    select = serialport.SerialPortSelect(root)
+    select = serialport.SerialPortSelect(root, callback)
 
 
 if __name__ == "__main__":

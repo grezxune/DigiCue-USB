@@ -9,6 +9,7 @@ else:
     from tkinter import ttk
 
 from scorebars import ScoreBars
+from option_list_command_mac_addr import OptionList_Command_MacAddr
 
 VERSION = "1.0.0"
 
@@ -17,7 +18,6 @@ class GUI(object):
         # All variables from DigiCue Blue are exposed through class variables
         # in dcb
 
-        print 'DOIN\' IT!!!'
         self.dcb = dcb
         self.packet_count = dcb.packet_count
         self.master = master

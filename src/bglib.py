@@ -109,7 +109,11 @@ class BGAPIEventHandler(object):
         """
 
         for func in self._getfunctionlist():
-            func(self.obj, earg)
+            if earg is not None:
+                func(self.obj, earg)
+            else:
+                raise ValueError('earg is None')
+
 
     __iadd__ = add
     __isub__ = remove
